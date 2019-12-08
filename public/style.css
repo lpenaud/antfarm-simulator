@@ -1,0 +1,74 @@
+.flex {
+  display: flex;
+}
+
+.flex.h-center {
+  justify-content: center;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-size: 1.1em;
+}
+
+label, input {
+  display: block;
+}
+
+h1 {
+  text-align: center;
+}
+
+form#setup {
+  border: 1px groove #979797;
+  margin-right: 2.2em;
+}
+
+form#setup > fieldset {
+  margin: 1.1em;
+  /* border: none; */
+}
+
+legend {
+  text-align: center;
+}
+
+form#setup div {
+  margin-top: 1.1em;
+  margin-bottom: 1.1em;
+}
+
+form#setup div:first-of-type {
+  margin-top: auto;
+  margin-bottom: 1.1em;
+}
+
+form#setup div:last-of-type {
+  margin-top: 1.1em;
+  margin-bottom: auto;
+}
+
+form#setup button {
+  margin: 1px auto;
+}
+
+label {
+  text-align: center;
+}
+
+svg#grid rect {
+  width: 20px;
+  height: 20px;
+  stroke: black;
+}
+
+g {
+  fill: white;
+}
+
+.fill-red {
+  fill: red;
+}

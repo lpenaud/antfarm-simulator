@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Ant simulation</title>
+</head>
+<body>
+  <main>
+    <h1>FourmiZ</h1>
+    <div class="flex" id="container">
+      <form id="setup">
+        <fieldset>
+          <legend>Startup configuration</legend>
+          <div>
+            <label for="grid-column">Column</label>
+            <input type="number" name="grid-column" id="grid-column" min="1" max="600">
+            </div>
+            <div>
+              <label for="grid-line">Line</label>
+              <input type="number" name="grid-line" id="grid-line" min="1" max="600">
+            </div>
+            <div>
+              <label for="nb-queen">Queen</label>
+              <input type="number" name="nb-queen" id="nb-queen" min="1" max="10">
+            </div>
+            <div class="flex h-center">
+              <button type="submit">Start</button>
+            </div>
+        </fieldset>
+      </form>
+    </div>
+  </main>
+  <script type="module" src="build/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "outDir": "public/build",
+    "newLine": "LF",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "WebWorker"
+    ],
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+  ],
+}

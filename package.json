@@ -1,0 +1,19 @@
+{
+  "name": "ant-simulator",
+  "version": "1.0.0",
+  "description": "A ant simulator",
+  "main": "index.js",
+  "author": "lpenaud <l.penaud@zaclys.net>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "serve public"
+  },
+  "devDependencies": {
+    "serve": "^11.2.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
+}
