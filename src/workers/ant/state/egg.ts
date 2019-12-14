@@ -1,12 +1,11 @@
-import State from "./state.js";
+import State, { strState } from "./state.js";
 import Ant from "../ant.js";
-import { randNumber } from "../../tools/random.js";
 import Larva from "./larva.js";
 
 export default class Egg extends State {
 
   constructor(timestamp: number, ant: Ant) {
-    super(timestamp, randNumber(ant.eggAge));
+    super(timestamp, ant.eggAge);
   }
 
   public nextState(timestamp: number, ant: Ant): void {
@@ -15,7 +14,7 @@ export default class Egg extends State {
     }
   }
 
-  public toString(): string {
-    return "Egg";
+  public toString(): strState {
+    return "egg";
   }
 }
