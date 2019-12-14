@@ -1,7 +1,7 @@
 import World, { IWorldStatus } from "./world/world.js";
-import { IDataMessage, evolvablesType } from "../lib/exchange.js";
+import { IDataMessage } from "../lib/exchange.js";
 import Queen from "./ant/queen.js";
-import { randNumber } from "./tools/random.js";
+import { randInt } from "./tools/random.js";
 
 const TIMEOUT = 500;
 
@@ -14,13 +14,14 @@ function promiseTimeout(fn: () => void, ms: number) {
   });
 }
 
-function postStatusMessage(i: number, status: IWorldStatus[]) {
+function postStatusMessage(cycle: number, timestamp: number, status: IWorldStatus[]) {
   const msg: IDataMessage = {
-    i,
+    cycle,
+    timestamp,
     positions: status.map(({ x, y, evolvables }) => ({
       x,
       y,
-      evolvables: evolvables.map((e) => e.toString() as evolvablesType),
+      evolvables: evolvables.map((e) => e.toString()),
     })),
   };
   postMessage(msg);
@@ -30,11 +31,12 @@ addEventListener("message", (ev) => {
   const { data } = ev;
   console.log("receive", data);
   const world = new World(data.column, data.line);
-  const timestamp = Date.now();
+  const now = Date.now();
   let cycle = 0;
   const func = () => {
-    world.evolve(cycle * 8.64E7 + timestamp);
-    postStatusMessage(cycle++, world.exec());
+    const timestamp = now + cycle * 8.64E7;
+    world.evolve(timestamp);
+    postStatusMessage(cycle++, timestamp, world.exec());
     if (cycle >= 1825) {
       console.log("finish");
     } else {
@@ -42,12 +44,11 @@ addEventListener("message", (ev) => {
     }
   };
   for (let i = 0; i < data.queen; i++) {
-    const queen = new Queen(timestamp);
-    const x = randNumber({ min: 0, max: data.column });
-    const y = randNumber({ min: 0, max: data.line });
-    console.log(x, y);
+    const queen = new Queen(now);
+    const x = randInt({ min: 0, max: data.column - 1 });
+    const y = randInt({ min: 0, max: data.line - 1 });
     world.getPosition(x, y).arrive(queen);
   }
-  postStatusMessage(cycle++, world.exec());
+  postStatusMessage(cycle++, now, world.exec());
   promiseTimeout(func, TIMEOUT);
 });

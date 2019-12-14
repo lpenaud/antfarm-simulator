@@ -1,12 +1,11 @@
-export type evolvablesType = "ant" | "queen-ant" | "ant-farm";
-
 export interface IPosition {
   x: number;
   y: number;
-  evolvables: evolvablesType[];
+  evolvables: string[];
 }
 
 export interface IDataMessage {
-  i: number;
+  cycle: number;
+  timestamp: number;
   positions: IPosition[];
 }
