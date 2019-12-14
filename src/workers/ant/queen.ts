@@ -1,6 +1,7 @@
-import Ant, { IAge } from "./ant.js";
+import Ant from "./ant.js";
 import Adult from "./state/adult.js";
 import CreateAntFarm from "./work/create-antfarm.js";
+import { IMinMax } from "../tools/random.js";
 
 export interface IMonthDate {
   month: number;
@@ -13,7 +14,7 @@ export interface ISeason {
 }
 
 export default class Queen extends Ant {
-  public readonly adultAge: IAge = { min: 1.26144E11, max: 3.1536E11 };
+  public readonly adultAge: IMinMax = { min: 1.26144E11, max: 3.1536E11 };
   public readonly eggLayingSeason: ISeason = { begin: { month: 2, date: 20 }, end: { month: 5, date: 20 } };
 
   public constructor(timestamp: number) {
