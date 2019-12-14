@@ -1,7 +1,7 @@
 import Work from "./work.js";
 import World from "../../world/world.js";
 import Position from "../../world/position.js";
-import Queen, { ISeason, IMonthDate } from "../queen.js";
+import Queen, { IMonthDate } from "../queen.js";
 import EggCommand from "../../commands/egg-command.js";
 
 function getLayingSeason(timestamp: number, { date, month }: IMonthDate) {
