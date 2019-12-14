@@ -6,6 +6,12 @@ export interface IGrid {
   width: number;
 }
 
+interface IGridElement extends SVGElement {
+  dataset: {
+    evolvable: string;
+  };
+}
+
 export default class Grid {
   public readonly width: number;
   public readonly svg: SVGSVGElement;
@@ -94,31 +100,31 @@ export default class Grid {
    * updateRect
    */
   public updateRect({ x, y, evolvables }: IPosition) {
-    const widthStr = `${this.width}`;
     const rect = this.getRect(x, y);
     const g = rect.parentElement;
-    while (g.hasChildNodes()) {
-      g.removeChild(g.lastChild);
+    const elements = Array.from(g.children) as IGridElement[];
+    const evolvableSet = new Set(evolvables);
+    if (elements.length === 1) {
+      for (const e of evolvableSet) {
+        g.appendChild(createSvgImage(x, y, this.width, e));
+      }
+      return;
     }
-    g.classList.remove("fill-white", "fill-red");
-    g.appendChild(rect);
-    for (const evoluable of evolvables) {
-      if (evoluable === "ant-farm") {
-        g.classList.add("fill-red");
+    for (const el of elements) {
+      const { evolvable } = el.dataset;
+      if (!evolvable) {
         continue;
       }
-      const image = createSvgElement("image");
-      image.setAttribute("href", `/images/${evoluable}.svg`);
-      image.setAttribute("x", `${x * this.width}`);
-      image.setAttribute("y", `${y * this.width}`);
-      image.setAttribute("height", widthStr);
-      image.setAttribute("width", widthStr);
-      g.appendChild(image);
+      if (!evolvableSet.delete(evolvable)) {
+        g.removeChild(el);
+      }
+    }
+    for (const evolvable of evolvableSet) {
+      g.appendChild(createSvgImage(x, y, this.width, evolvable));
     }
   }
 
   protected createGrid(column: number, line: number) {
-    const widthStr = `${this.width}`;
     this.svg.setAttribute("width", `${column * this.width}`);
     this.svg.setAttribute("height", `${line * this.width}`);
     for (let x = 0; x < column; x++) {
@@ -150,4 +156,15 @@ function createSvgRect(x: number, y: number): SVGRectElement {
   rect.setAttribute("x", `${x}`);
   rect.setAttribute("y", `${y}`);
   return rect;
+}
+
+function createSvgImage(x: number, y: number, width: number, evolvable: string) {
+  const image = createSvgElement("image");
+  image.dataset.evolvable = evolvable;
+  image.setAttribute("href", `/images/${evolvable}.svg`);
+  image.setAttribute("x", `${x * width}`);
+  image.setAttribute("y", `${y * width}`);
+  image.setAttribute("height", `${width}`);
+  image.setAttribute("width", `${width}`);
+  return image;
 }
